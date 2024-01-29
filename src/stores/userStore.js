@@ -23,12 +23,12 @@ export class ObservableUserStore {
         loadStatus: observable,
         error: observable,
         sortedBy: observable,
-        addManyAsync: action,
+        getAllAsync: action,
         refreshSortedUsers: action,
         sortByProp: action,
         changeLoadStatus: action
       });
-      runInAction(this.addManyAsync)
+      runInAction(this.getAllAsync)
     }
 
     get getUsers() {
@@ -49,11 +49,15 @@ export class ObservableUserStore {
         this.loadStatus = status
     }
 
-    addManyAsync = async () => {
+    getAllAsync = async (searchQuery) => {
         try {
             this.changeLoadStatus(LOAD_PENDING)
-            this.users = [...(await UserService.getAll())]
-            this.sortedUsers.push(...this.users)
+            if (searchQuery) {
+                this.users = [...(await UserService.search(searchQuery))]
+            } else {
+                this.users = [...(await UserService.getAll())]
+            }
+            this.refreshSortedUsers()
         } catch(err) {
             this.changeLoadStatus(LOAD_ERROR)
             this.error = err
