@@ -1,9 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import style from './user-list.module.css'
-import { useEffect } from 'react'
-import { ASC_SORT, DEFAULT_SORT, DESC_SORT, LOAD_ERROR, LOAD_PENDING, LOAD_DONE } from '../../stores/userStore'
+import { useContext, useEffect } from 'react'
+import { ASC_SORT, DEFAULT_SORT, DESC_SORT, LOAD_ERROR, LOAD_PENDING, LOAD_DONE } from '../../stores/user-store'
+import { StoreContext } from '../../main'
 
-export const UserList = observer(({userStore}) => {
+export const UserList = observer(({showUser}) => {
+    const {users: userStore} = useContext(StoreContext)
 
     function renderSwitch(condition) {
         switch(condition) {
@@ -60,7 +62,10 @@ export const UserList = observer(({userStore}) => {
                         <tbody>
                             {
                                 userStore.getUsers.map(user => (
-                                    <tr key={user.id}>
+                                    <tr key={user.id} onClick={(e) => {
+                                        e.stopPropagation()
+                                        showUser(user.id)
+                                    }}>
                                         <td>{user.fio}</td>
                                         <td>{user.age}</td>
                                         <td>{user.gender}</td>

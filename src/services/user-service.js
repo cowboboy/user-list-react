@@ -1,6 +1,15 @@
 export class UserService {
     static baseUrl = "https://dummyjson.com/users/"
 
+    static async getOne(id) {
+        const response = await fetch(UserService.baseUrl + id)
+        let data = await response.json()
+
+        data = UserService.modifyUsers(data)
+
+        return data.users[0]
+    }
+
     static async getAll() {
         const response = await fetch(UserService.baseUrl)
         let data = await response.json()

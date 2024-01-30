@@ -1,4 +1,4 @@
-import { runInAction, makeObservable, observable, action } from "mobx";
+import { runInAction, makeObservable, observable, action, computed, autorun } from "mobx";
 import { UserService } from "../services/user-service";
 
 export const ASC_SORT = "asc_sort"
@@ -9,7 +9,7 @@ export const LOAD_PENDING = "pending"
 export const LOAD_DONE = "done"
 export const LOAD_ERROR = "error"
 
-export class ObservableUserStore {
+export class UserStore {
     users = []
     sortedUsers = []
     loadStatus = ""; // ASC_SORT, DESC_SORT, DEFAULT_SORT
@@ -23,12 +23,11 @@ export class ObservableUserStore {
         loadStatus: observable,
         error: observable,
         sortedBy: observable,
-        getAllAsync: action,
+        getAll: action,
         refreshSortedUsers: action,
         sortByProp: action,
-        changeLoadStatus: action
       });
-      runInAction(this.getAllAsync)
+      runInAction(this.getAll)
     }
 
     get getUsers() {
@@ -49,7 +48,11 @@ export class ObservableUserStore {
         this.loadStatus = status
     }
 
-    getAllAsync = async (searchQuery) => {
+    getUser(id) {
+        return this.users.find(user => user.id === id)
+    }
+
+    getAll = async (searchQuery) => {
         try {
             this.changeLoadStatus(LOAD_PENDING)
             if (searchQuery) {
