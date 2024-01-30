@@ -5,19 +5,21 @@ import { Modal } from './components/UI/modal/modal'
 import { observer } from 'mobx-react-lite'
 import { useContext } from 'react'
 import { StoreContext } from './main'
+import { SearchInput } from './components/UI/search-input/search-input'
 
 const modal = new UIModalStore()
 
 const App = observer(() => {
   const {users} = useContext(StoreContext)
   return (
-      <>
-        <input style={{width: "1200px"}} onChange={(e) => users.getAll(e.target.value)} placeholder="Поиск..."></input>
+      <div className="wrapper">
+        
         <Modal isVisible={modal.isVisible} hide={modal.hide} userId={modal.userId}/>
-        <div className='wrapper'>
+        <div className='content'>
+          <SearchInput onChange={e => users.getAll(e.target.value)}/>
           <UserList showUser={modal.show}/>
         </div>
-      </>
+      </div>
   )
 })
 

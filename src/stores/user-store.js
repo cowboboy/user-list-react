@@ -13,7 +13,7 @@ export class UserStore {
     users = []
     sortedUsers = []
     loadStatus = ""; // ASC_SORT, DESC_SORT, DEFAULT_SORT
-    error = ""
+    errorMessage = ""
     sortedBy = [] // Список полей user, по которым ведется сортировка (первые элементы вносят больший вклад)
   
     constructor() {
@@ -21,7 +21,7 @@ export class UserStore {
         users: observable,
         sortedUsers: observable,
         loadStatus: observable,
-        error: observable,
+        errorMessage: observable,
         sortedBy: observable,
         getAll: action,
         refreshSortedUsers: action,
@@ -61,11 +61,10 @@ export class UserStore {
                 this.users = [...(await UserService.getAll())]
             }
             this.refreshSortedUsers()
+            this.changeLoadStatus(LOAD_DONE)
         } catch(err) {
             this.changeLoadStatus(LOAD_ERROR)
-            this.error = err
-        } finally {
-            this.changeLoadStatus(LOAD_DONE)
+            this.errorMessage = err.message
         }
     }
 
