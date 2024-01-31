@@ -24,7 +24,7 @@ const columns = [
     },
     {
         text: "Адрес",
-        sortProp: "address"
+        sortProp: "fullAddress"
     }
 ]
 
@@ -77,7 +77,7 @@ export const UserList = observer(({showUser}) => {
                                             <span>
                                                 {column.text}
                                             </span>
-                                            <MyFilterSelect onChange={e => users.sortByProp(column.sortProp, e.target.value)}/>
+                                            {column.sortProp && <MyFilterSelect onChange={e => users.sortByProp(column.sortProp, e.target.value)}/>}
                                         </th>
                                     ))
                                 }
@@ -100,7 +100,7 @@ export const UserList = observer(({showUser}) => {
                     </table>
                 )
             case LOAD_ERROR:
-                return <h1 className={style.error}>{users.errorMessage}</h1>
+                return <div className={style.error}><h1>{users.errorMessage}</h1></div>
         }
     }
     

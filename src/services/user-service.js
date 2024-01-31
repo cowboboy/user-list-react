@@ -5,7 +5,7 @@ export class UserService {
         const response = await fetch(UserService.baseUrl + id)
 
         if (!response.ok) {
-            throw new Error("HTTP error: " + response.status)
+            throw new Error("Ошибка HTTP: " + response.status)
         }
         
         let data = await response.json()
@@ -18,7 +18,7 @@ export class UserService {
         const response = await fetch(UserService.baseUrl)
         
         if (!response.ok) {
-            throw new Error("HTTP error: " + response.status)
+            throw new Error("Ошибка HTTP: " + response.status)
         }
 
         let data = await response.json()
@@ -31,7 +31,7 @@ export class UserService {
         const response = await fetch(UserService.baseUrl+'search?q='+query)
         
         if (!response.ok) {
-            throw new Error("HTTP error: " + response.status)
+            throw new Error("Ошибка HTTP: " + response.status)
         }
         
         let data = await response.json()

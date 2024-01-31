@@ -23,3 +23,18 @@
 .modalFields {
     font-weight: 900;
 }
+
+.closebtn {
+    margin-left: 15px;
+    color: gray;
+    font-weight: bold;
+    float: right;
+    font-size: 26px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
