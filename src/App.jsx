@@ -10,7 +10,9 @@ import { SearchInput } from './components/UI/search-input/search-input'
 const modal = new UIModalStore()
 
 const App = observer(() => {
+
   const {users} = useContext(StoreContext)
+
   return (
       <div className="wrapper">
         
