@@ -20,10 +20,15 @@ export const Modal = observer(({isVisible, userId, hide}) => {
             {
                 aUser &&
                 <div className={style.modalContent} onClick={e => e.stopPropagation()}>
+                        <p className={style.modalFields}>ФИО</p>
                         <p>{aUser.fio}</p>
+                        <p className={style.modalFields}>Возраст</p>
                         <p>{aUser.age}</p>
+                        <p className={style.modalFields}>Пол</p>
                         <p>{aUser.gender}</p>
+                        <p className={style.modalFields}>Номер телефона</p>
                         <p>{aUser.phone}</p>
+                        <p className={style.modalFields}>Адрес</p>
                         <p>{aUser.fullAddress}</p>
                 </div>
             }
